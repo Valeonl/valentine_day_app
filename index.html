@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-AU-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/preloader.css">
+    <script type="text/javascript" src="js/code_list.js"></script>
+    <script src="js/html2canvas.min.js"></script>
+    <script src="js/script.js"></script>
+    <title> Saint Valentine Day</title>
+</head>
+<body>    
+    <div class="wrapper" id="scrn">
+        
+        <div class="card">
+            <div class="front">
+                <img class="angel" src="css/pics/angel.png">
+                <input type="text" placeholder="Введите код" class="code" maxlength=7
+            id="code_value" pattern="2-[0-9]{3}-[0-9]{3}">
+                <button class="submit" onclick="getWunch();"><span>Узнать<br>пожелание!</span></button>
+            </div>
+            <div class="back">
+                <img class="angel" src="css/pics/angel.png">
+                <div class="desire_wrap">
+                    <div id="desire">
+
+                    </div>
+                </div>
+                
+                <button class="submit" onclick="takeshot();"><span id="screen_text">
+                    Сохранить скриншот!
+                </span></button>
+            </div>
+            
+        </div>
+        <div class="white_space">
+            <div class="preloader_main">
+                <div class="preloader_wrap">
+                    <div class="ldio">
+                        <div>
+                            <span class="load_value">100%</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="progress">
+                    <div class="progress-value"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body, html {    
+    font-family: sans-serif;
+    overflow-x: hidden;
+    height: 100%;
+}
+body {
+    background: url(pics/bg.jpg);
+    background-size: cover;
+}
+.wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center; /*Центрирование по горизонтали*/
+    align-items: center;   
+}
+.card {   
+   position: relative;
+   width: 400px;
+   height: 400px;
+   -webkit-perspective: 1000px;
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    z-index: auto;
+    top: 0;
+}
+.front{
+    background: url(pics/heart.png) no-repeat center;
+    background-size: contain;
+    
+    display: inline-block;
+    /*border: 2px solid red;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /*Центрирование по горизонтали*/
+    align-items: center;
+    
+
+}
+.desire_wrap {
+    width: 350px;
+    height: 200px;
+    background: url(pics/placeholder.png) no-repeat top left;
+    background-size: 100% 100%;
+    /*border: 5px solid red;*/
+    display: flex;
+    justify-content: center; /*Центрирование по горизонтали*/
+    align-items: center;
+}
+#desire {
+    width: 90%;    
+    resize: none;
+    outline: none;
+   
+    color: white;
+    font-size: 1.0em;
+    overflow: auto;
+    text-align: center;
+    text-shadow: 2px 0 2px black, 
+    0 2px 2px black, 
+    -2px 0 2px black, 
+    0 -2px 2px black;
+    font-style: italic;
+}
+#desire:before { content: '" ' }
+#desire:after  { content: ' "' }
+.back {
+    background: url(pics/heart.png) no-repeat center;
+    background-size: contain;
+    
+    display: inline-block;
+    /*border: 2px solid red;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /*Центрирование по горизонтали*/
+    align-items: center;
+    -webkit-transform: rotateY(180deg);
+    
+}
+.front, .back {
+    transition: 1.3s;
+    -webkit-backface-visibility: hidden;
+}
+/*
+.card:hover .front {
+    transform: rotateY(180deg);
+}
+.card:hover .back {
+    transform: rotateY(360deg);
+}
+*/
+.code {
+    background: url(pics/placeholder.png) no-repeat top left;
+    background-size: contain;
+
+    height: calc(174px*0.7);
+    width: calc(409px*0.7);
+    text-align: center;
+    font-size:2em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 auto;
+
+    border-style: none;
+    color: linear-gradient(to right, #462523 0, #cb9b51 22%, #f6e27a 45%, #f6f2c0 50%, #f6e27a 55%, #cb9b51 78%, #462523 100%);
+}
+input {outline:none;}
+
+.gold {
+    color: transparent;
+    position: absolute;
+    -webkit-transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    letter-spacing: 5px;
+    font-weight: bold;
+    color: linear-gradient(to right, #462523 0, #cb9b51 22%, #f6e27a 45%, #f6f2c0 50%, #f6e27a 55%, #cb9b51 78%, #462523 100%);
+    -webkit-background-clip: text;
+}
+
+.submit {
+    background: url(pics/bilet.png) no-repeat top left;
+    background-size: contain;
+    height: calc(248px*0.3);
+    width: calc(510px*0.3);
+    border-style: none;
+    
+    font-family: sans-serif;
+    
+    font-size: 1.5em;
+    text-shadow: 2px 0 2px black, 
+    0 2px 2px black, 
+    -2px 0 2px black, 
+    0 -2px 2px black;
+    color: white;
+
+}
+.submit:active{
+    color:maroon;
+}
+.submit:hover{
+    
+
+    text-shadow: 2px 0 2px white, 
+    0 2px 2px white, 
+    -2px 0 2px white, 
+    0 -2px 2px white;
+    color: #8B4513;
+}
+
+
+
+.angel {
+    position: absolute;
+    width: 300px;
+    -webkit-transform: rotate(-15deg);
+    top: -15%;
+}
+
+.back .angel {   
+    -webkit-transform: scale(-1, 1);     
+}
+
+
+
+
+.button {
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}

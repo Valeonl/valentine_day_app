@@ -1,0 +1,151 @@
+
+@keyframes ldio {
+    0%, 100% {
+      animation-timing-function: cubic-bezier(0.45,1,0.9,1)
+    }
+    0% {
+      transform: translate(0,0) rotate(-45deg) scale(2);
+    }
+    50% {
+      transform: translate(0,20px) rotate(-45deg) scale(2);
+      animation-timing-function: cubic-bezier(0,0.45,0.55,0.9);
+    }
+    100% {
+      transform: translate(0,0) rotate(-45deg) scale(2);
+    }
+  }
+
+.ldio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+  .ldio div {
+     
+    animation: ldio 1.3s linear infinite;
+  }
+  .preloader_wrap {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    overflow: hidden;
+    background: none;
+    position: absolute;    
+  }
+  .ldio {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(10);
+    backface-visibility: hidden;
+    transform-origin: 0 0; /* see note above */
+  }
+ 
+
+
+  .ldio div{
+    background-color: red;
+    display: inline-block;
+    height: 30px;
+    margin: 0 10px;
+    position: relative;
+    top: 0;
+    transform: rotate(-45deg);
+    width: 30px;
+  }
+  
+  .ldio div:before,
+  .ldio div:after {
+    content: "";
+    background-color: red;
+    border-radius: 50%;
+    height: 30px;
+    position: absolute;
+    width: 30px;
+  }
+
+  .ldio div.gender:before,
+  .ldio div.gender:after {
+    content: "";
+    background-color: #455AA5 !important;
+    border-radius: 50%;
+    height: 30px;
+    position: absolute;
+    width: 30px;
+  }
+  
+  .ldio div:before {
+    top: -15px;
+    left: 0;
+  }
+  
+  .ldio div:after {
+    left: 15px;
+    top: 0;
+  }
+.load_value {
+    transform: rotate(45deg);
+    z-index: 10;
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    left: 7px;
+    
+}
+
+
+  .progress {
+    background: rgba(255,255,255,0.8);
+    justify-content: flex-start;
+    border-radius: 100px;
+    align-items: center;
+    position: relative;
+    padding: 0px 5px;
+    display: flex;
+    height: 40px;
+    width: 100%;
+  }
+  
+  .progress-value {
+    animation: load 3s normal forwards;
+    box-shadow: 0 10px 40px -10px #fff;
+    border-radius: 100px;
+    background: red;
+    height: 30px;
+    width: 10%;
+  }
+  
+  .gender {
+    background: #455AA5 !important;
+  }
+
+
+
+.preloader_main {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 200px;
+    height: 400px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.white_space {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: white;
+    transition: 0.8s;
+    opacity: 1;
+    display: block;
+    z-index: 100;
+}
+
+.hide {
+    opacity: 0 !important;
+    transition: 0.8s;
+    z-index: -10;
+}
