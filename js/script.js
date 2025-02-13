@@ -65,15 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
             existingAlert.remove();
         }
 
+        // Очищаем текст от HTML тегов
+        const cleanMessage = message.replace(/<br>/g, ' ');
+
         const alert = document.createElement('div');
         alert.className = 'custom-alert';
-        alert.textContent = message;
+        alert.textContent = cleanMessage;
         document.body.appendChild(alert);
 
-        // Показываем алерт
         setTimeout(() => alert.classList.add('show'), 100);
-
-        // Скрываем и удаляем алерт
         setTimeout(() => {
             alert.classList.remove('show');
             setTimeout(() => alert.remove(), 500);
@@ -84,9 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canFlip = false;
         
         if (firstCard.cardData.category === secondCard.cardData.category) {
-            // Проверяем, будет ли это последней парой
             if (pairs === 7) {
-                // Если это последняя пара, сразу играем звук победы
                 setTimeout(() => {
                     SOUNDS.win.play();
                     firstCard.card.classList.add('matched');
@@ -102,8 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const x = rect.left + rect.width / 2;
                 const y = rect.top + rect.height / 2;
                 
+                // Очищаем текст от HTML тегов для сообщения
+                const firstLabel = firstCard.cardData.label.replace(/<br>/g, ' ');
+                const secondLabel = secondCard.cardData.label.replace(/<br>/g, ' ');
+                
                 setTimeout(() => {
-                    showCustomAlert(`Найдена пара: ${firstCard.cardData.label} + ${secondCard.cardData.label}!`);
+                    showCustomAlert(`Найдена пара: ${firstLabel} + ${secondLabel}!`);
                     createHeartParticles(x, y);
                     firstCard.card.classList.add('matched');
                     secondCard.card.classList.add('matched');
@@ -143,8 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="css/pics/angel.png" alt="Святой Валентин">
                 <h2>Поздравляем! 🎉</h2>
                 <p>Вы нашли все пары за ${moves} ходов!</p>
-                <p class="wish">${randomWish}</p>
-                <button onclick="saveScreenshot()">Сохранить скриншот 📸</button>
+                <p class="wish-title">Святой Валентин желает Вам:</p>
+                <div class="wish-container">
+                    ${randomWish}
+                </div>
                 <button onclick="location.reload()">Играть снова 🔄</button>
             `;
             document.body.appendChild(modal);
@@ -158,35 +162,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const screenshotContainer = document.createElement('div');
             screenshotContainer.className = 'screenshot-container';
             
-            // Копируем содержимое модального окна
+            // Копируем содержимое модального окна и очищаем от HTML тегов
             const modalContent = document.querySelector('.congratulation-modal').cloneNode(true);
             modalContent.querySelectorAll('button').forEach(btn => btn.remove());
             
             screenshotContainer.appendChild(modalContent);
             document.body.appendChild(screenshotContainer);
 
-            // Используем только html2canvas
-            html2canvas(screenshotContainer, {
-                backgroundColor: 'white',
-                scale: 2, // Увеличиваем качество
-                useCORS: true, // Разрешаем кросс-доменные изображения
-                logging: false,
-                windowWidth: screenshotContainer.offsetWidth,
-                windowHeight: screenshotContainer.offsetHeight,
-                x: screenshotContainer.offsetLeft,
-                y: screenshotContainer.offsetTop,
-                width: screenshotContainer.offsetWidth,
-                height: screenshotContainer.offsetHeight
-            }).then(canvas => {
-                const link = document.createElement("a");
-                link.download = "valentine_wish.png";
-                link.href = canvas.toDataURL("image/png", 1.0);
-                link.click();
-                screenshotContainer.remove();
-            }).catch(error => {
-                console.error("Screenshot failed:", error);
-                alert("Не удалось сохранить скриншот. Пожалуйста, попробуйте еще раз.");
-            });
+            // Даем время для загрузки изображений
+            setTimeout(() => {
+                html2canvas(screenshotContainer, {
+                    backgroundColor: '#ffffff',
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    onrendered: function(canvas) {
+                        const link = document.createElement("a");
+                        link.download = "valentine_wish.png";
+                        link.href = canvas.toDataURL("image/png");
+                        link.click();
+                        screenshotContainer.remove();
+                    }
+                });
+            }, 100);
         } catch (error) {
             console.error("Screenshot failed:", error);
             alert("Не удалось сохранить скриншот. Пожалуйста, попробуйте еще раз.");
@@ -213,6 +211,46 @@ document.addEventListener('DOMContentLoaded', () => {
     shuffledCards.forEach(cardData => {
         gameGrid.appendChild(createCard(cardData));
     });
+
+    // Инициализация прогресс-бара
+    const progressbar = document.querySelector('.progress-value');
+    const preloader_idio = document.querySelector('.ldio div');
+    
+    // Устанавливаем стандартные красные стили
+    if (preloader_idio) {
+        preloader_idio.style.background = 'red';
+    }
+    if (progressbar) {
+        progressbar.style.background = 'red';
+    }
+
+    // Запускаем анимацию загрузки
+    let p = 0;
+    function timeout_trigger() {
+        const progress_bar = document.querySelector('.progress-value');
+        const white_bg = document.querySelector('.white_space');
+        
+        if (progress_bar) {
+            progress_bar.style.width = `${p+1}%`;
+        }
+        
+        const load_value = document.querySelector('.load_value');
+        if (load_value) {
+            load_value.innerHTML = `${p}%`;
+        }
+        
+        if (p != 100) {
+            setTimeout(timeout_trigger, 30);
+        }
+        p++;
+        
+        if (p > 100 && white_bg) {
+            white_bg.classList.add('hide');
+        }
+    }
+
+    // Запускаем прогресс
+    timeout_trigger();
 });
 
 // Функция для начала игры
@@ -221,49 +259,6 @@ function startGame() {
     introModal.classList.add('hide');
     setTimeout(() => introModal.remove(), 300);
 }
-
-gender = getAllUrlParams().gender;
-console.log(gender);
-front = document.querySelector('.front');
-back =  document.querySelector('.back');
-preloader_idio = document.querySelector('.ldio div');
-preloader_idio_2 = document.querySelector('.ldio div:before, .ldio div:after');
-progressbar = document.querySelector('.progress-value');
-progressbar.addEventListener("load", timeout_trigger());
-if (gender == "male") {
-	front.style.backgroundImage="url(css/pics/heart_male.png)";
-	back.style.backgroundImage="url(css/pics/heart_male.png)";
-    preloader_idio.style.background = '#455AA5';
-    preloader_idio.classList.toggle('gender');
-    progressbar.classList.toggle('gender');
-    progressbar.style.background = '#455AA5';
-
-}
-else {
-	front.style.backgroundImage="url(css/pics/heart.png)";
-	back.style.backgroundImage="url(css/pics/heart.png)";
-    preloader_idio.style.background = 'red';
-    progressbar.style.background = 'red';
-}
-
-p = 0;
-
-function timeout_trigger() {
-    progress_bar = document.querySelector('.progress-value');
-    white_bg = document.querySelector('.white_space');
-    //console.log(white_bg);
-    progress_bar.setAttribute("style",`width:${p+1}%`);
-    document.querySelector('.load_value').innerHTML =`${p}%`;
-   if(p!=100) {
-       setTimeout('timeout_trigger()', 30);
-   }
-   p++;
-   if(p>100)
-    {
-        white_bg.classList.add('hide');
-    }
-}
-
 
 //Регулярное выражение для проверки кода
 const regexp = /\d[A-Z,a-z]\d\d[A-Z,a-z][A-Z,a-z]\d/
