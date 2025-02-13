@@ -1,3 +1,11 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Скрываем скроллбары на body */
+    height: 100%;
+    width: 100%;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -17,6 +25,9 @@ body {
 .wrapper {
     text-align: center;
     padding: 20px;
+    max-height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
 
 h1 {
@@ -42,6 +53,7 @@ h1 {
     max-width: 600px;
     width: 95%;
     margin: 0 auto;
+    overflow: visible; /* Позволяем карточкам выходить за пределы сетки при анимации */
 }
 
 .card {
@@ -561,4 +573,22 @@ input {outline:none;}
 .screenshot-container img {
     max-width: 100%;
     height: auto;
+}
+
+/* Для модальных окон и контейнеров */
+.intro-modal-content,
+.congratulation-modal,
+.screenshot-container,
+.game-grid {
+    overflow: hidden; /* Скрываем скроллбары */
+    -ms-overflow-style: none; /* IE и Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Скрываем скроллбары для WebKit браузеров */
+.intro-modal-content::-webkit-scrollbar,
+.congratulation-modal::-webkit-scrollbar,
+.screenshot-container::-webkit-scrollbar,
+.game-grid::-webkit-scrollbar {
+    display: none;
 }
