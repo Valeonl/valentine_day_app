@@ -348,9 +348,9 @@ input {outline:none;}
 }
 
 .congratulation-modal img {
-    width: 300px; /* Увеличили в 2 раза */
+    width: 50%; /* Увеличили в 2 раза */
     margin-bottom: 20px;
-    margin-top: -50px; /* Подняли выше */
+    
 }
 
 .congratulation-modal h2 {
