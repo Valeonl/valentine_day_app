@@ -24,22 +24,25 @@ body {
 
 .wrapper {
     text-align: center;
-    padding: 20px;
-    max-height: 100vh;
-    overflow: hidden;
-    position: relative;
+    padding: 10px;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 h1 {
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    margin-bottom: 20px;
+    margin: 10px 0;
+    font-size: min(5vw, 5vh);
 }
 
 .game-stats {
     color: #fff;
-    margin-bottom: 20px;
-    font-size: 1.2em;
+    margin: 10px 0;
+    font-size: min(3vw, 3vh);
 }
 
 .game-stats span {
@@ -50,24 +53,20 @@ h1 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    max-width: 600px;
-    width: 95%;
-    margin: 0 auto;
-    overflow: visible; /* Позволяем карточкам выходить за пределы сетки при анимации */
+    width: min(90vw, 90vh);
+    aspect-ratio: 1;
+    margin: 10px auto;
 }
 
 .card {
     aspect-ratio: 1;
+    position: relative;
     width: 100%;
-    max-width: 120px;
-    height: auto;
-    margin: 0 auto;
     background: #fff;
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    position: relative;
 }
 
 .card.flipped {
@@ -81,18 +80,21 @@ h1 {
 
 .card-front, .card-back {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 3em;
     border-radius: 10px;
 }
 
 .card-front {
     background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    font-size: min(10vw, 10vh); /* Увеличиваем размер сердечка */
 }
 
 .card-back {
@@ -106,30 +108,24 @@ h1 {
 }
 
 .card-emoji {
-    font-size: 2.5em;
+    font-size: min(6vw, 6vh);
     margin-bottom: 5px;
-    position: relative;
-    z-index: 1;
 }
 
 .card-label {
     position: absolute;
-    top: 50%;
+    bottom: 10%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     color: white;
     text-align: center;
     font-weight: bold;
-    text-shadow: 
-        -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
-        1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     width: 90%;
-    z-index: 2;
     background: rgba(0, 0, 0, 0.4);
-    padding: 2px 4px;
+    padding: 4px;
     border-radius: 3px;
+    font-size: min(2.5vw, 2.5vh);
     line-height: 1.2;
 }
 
@@ -385,35 +381,25 @@ input {outline:none;}
 
 /* Медиа-запросы для адаптивности */
 @media (max-width: 600px) {
+    .wrapper {
+        padding: 5px;
+    }
+
     .game-grid {
-        grid-template-columns: repeat(4, 1fr);
         gap: 5px;
+        width: 95vw;
     }
-    
-    .card-front, .card-back {
-        font-size: 2em;
+
+    .card-front {
+        font-size: min(15vw, 15vh);
     }
-    
-    h1 {
-        font-size: 1.5em;
-    }
-    
-    .game-stats {
-        font-size: 1em;
-    }
-    
-    .game-intro {
-        font-size: 1em;
-        padding: 10px;
-        margin-bottom: 20px;
-    }
-    
+
     .card-emoji {
-        font-size: 2em;
+        font-size: min(8vw, 8vh);
     }
-    
+
     .card-label {
-        font-size: 0.6em;
+        font-size: min(3vw, 3vh);
     }
 }
 
@@ -628,4 +614,69 @@ input {outline:none;}
     color: #ff6b6b;
     margin-bottom: 15px;
     font-weight: bold;
+}
+
+/* Добавим стили для очень маленьких экранов */
+@media (max-width: 350px) {
+    .wrapper {
+        padding: 3px;
+    }
+
+    .game-grid {
+        width: calc(100% - 6px);
+        gap: 2px;
+    }
+
+    .card-emoji {
+        font-size: 1.5em;
+    }
+
+    .card-label {
+        font-size: 0.6em;
+    }
+}
+
+/* Добавим стили для ландшафтной ориентации на мобильных */
+@media (max-height: 500px) and (orientation: landscape) {
+    .wrapper {
+        padding: 5px;
+    }
+
+    h1 {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+
+    .game-stats {
+        margin-bottom: 10px;
+    }
+
+    .game-grid {
+        max-width: 90vh; /* Привязываем к высоте экрана */
+    }
+}
+
+/* Медиа-запрос для ландшафтной ориентации */
+@media (orientation: landscape) {
+    h1 {
+        font-size: min(3vh, 24px);
+        margin-bottom: 5px;
+    }
+
+    .game-stats {
+        font-size: min(2vh, 18px);
+        margin-bottom: 5px;
+    }
+
+    .card-emoji {
+        font-size: min(5vh, 40px);
+    }
+
+    .card-label {
+        font-size: min(2vh, 14px);
+    }
+
+    .game-grid {
+        width: 85vh;
+    }
 }
